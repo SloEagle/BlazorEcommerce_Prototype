@@ -1,5 +1,6 @@
 global using BlazorEcommerce_Prototype.Shared;
 global using BlazorEcommerce_Prototype.Client.Services.ProductService;
+global using BlazorEcommerce_Prototype.Client.Services.CategoryService;
 
 using BlazorEcommerce_Prototype.Client;
 using Microsoft.AspNetCore.Components.Web;
@@ -11,5 +12,6 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 await builder.Build().RunAsync();
