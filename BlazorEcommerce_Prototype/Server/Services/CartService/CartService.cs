@@ -26,7 +26,7 @@
                 {
                     continue;
                 }
-
+                
                 var productVariant = await _context.ProductVariants
                     .Where(v => v.ProductId == item.ProductId && v.ProductTypeId == item.ProductTypeId)
                     .Include(v => v.ProductType)
@@ -36,7 +36,7 @@
                 {
                     continue;
                 }
-
+                
                 var cartProduct = new CartProductResponse
                 {
                     ProductId = product.Id,

@@ -16,7 +16,7 @@ namespace BlazorEcommerce_Prototype.Client.Services.ProductService
         public string Message { get; set; } = "Loading products...";
         public int CurrentPage { get; set; } = 1;
         public int PageCount { get; set; } = 0;
-        public string LastSearchText { get; set; }
+        public string LastSearchText { get; set; } = string.Empty;
 
         public event Action ProductsChanged;
 
@@ -31,7 +31,8 @@ namespace BlazorEcommerce_Prototype.Client.Services.ProductService
             var result = categoryUrl == null ? 
                 await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>("api/product/featured") : 
                 await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>($"api/product/category/{categoryUrl}");
-            if(result != null && result.Data != null)
+            //var result = await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>("api/product");
+            if (result != null && result.Data != null)
             {
                 Products = result.Data;
             }
