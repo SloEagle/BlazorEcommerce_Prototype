@@ -20,7 +20,7 @@
                 .Include(o => o.OrderItems)
                 .ThenInclude(oi => oi.Product)
                 .Include(o => o.OrderItems)
-                .ThenInclude(oi => oi.ProductTypeId)
+                .ThenInclude(oi => oi.ProductType)
                 .Where(o => o.UserId == _authService.GetUserId() && o.Id == orderId)
                 .OrderByDescending(o => o.OrderDate)
                 .FirstOrDefaultAsync();
