@@ -46,7 +46,7 @@ namespace BlazorEcommerce_Prototype.Client.Services.CategoryService
             var response = await _http.GetFromJsonAsync<ServiceResponse<List<Category>>>("api/category/admin");
             if (response != null && response.Data != null)
             {
-                Categories = response.Data;
+                AdminCategories = response.Data;
             }
         }
 
