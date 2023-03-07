@@ -17,8 +17,21 @@ namespace BlazorEcommerce_Prototype.Client.Services.ProductService
         public int CurrentPage { get; set; } = 1;
         public int PageCount { get; set; } = 0;
         public string LastSearchText { get; set; } = string.Empty;
+        public List<Product> AdminProducts { get; set; }
 
         public event Action ProductsChanged;
+
+        public async Task GetAdminProducts()
+        {
+            var result = await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>("api/product/admin");
+            AdminProducts = result.Data;
+            CurrentPage = 1;
+            PageCount = 0;
+            if(AdminProducts.Count == 0)
+            {
+                Message = "No products found.";
+            }
+        }
 
         public async Task<ServiceResponse<Product>> GetProduct(int productId)
         {
@@ -31,7 +44,6 @@ namespace BlazorEcommerce_Prototype.Client.Services.ProductService
             var result = categoryUrl == null ? 
                 await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>("api/product/featured") : 
                 await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>($"api/product/category/{categoryUrl}");
-            //var result = await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>("api/product");
             if (result != null && result.Data != null)
             {
                 Products = result.Data;
