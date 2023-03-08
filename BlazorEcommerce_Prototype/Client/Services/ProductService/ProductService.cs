@@ -21,6 +21,18 @@ namespace BlazorEcommerce_Prototype.Client.Services.ProductService
 
         public event Action ProductsChanged;
 
+        public async Task<Product> CreateProduct(Product product)
+        {
+            var result = await _http.PostAsJsonAsync("api/product", product);
+            var newProduct = (await result.Content.ReadFromJsonAsync<ServiceResponse<Product>>()).Data;
+            return newProduct;
+        }
+
+        public async Task DeleteProduct(int id)
+        {
+            var result = await _http.DeleteAsync($"api/product/{id}");
+        }
+
         public async Task GetAdminProducts()
         {
             var result = await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>("api/product/admin");
@@ -75,7 +87,6 @@ namespace BlazorEcommerce_Prototype.Client.Services.ProductService
                 Products = result.Data.Products;
                 CurrentPage = result.Data.CurrentPage;
                 PageCount = result.Data.Pages;
-
             }
 
             if(Products.Count == 0)
@@ -84,6 +95,12 @@ namespace BlazorEcommerce_Prototype.Client.Services.ProductService
             }
 
             ProductsChanged.Invoke();
+        }
+
+        public async Task<Product> UpdateProduct(Product product)
+        {
+            var result = await _http.PutAsJsonAsync("api/product", product);
+            return (await result.Content.ReadFromJsonAsync<ServiceResponse<Product>>()).Data;
         }
     }
 }
